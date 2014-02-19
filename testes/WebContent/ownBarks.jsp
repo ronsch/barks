@@ -33,21 +33,21 @@
 		<table id="headerTable" >
 			<tr>
 				<td>
-					<form name="barkYourself" action="members"  method="POST">
+					<form name="barkYourself" action="members"  method="get">
 						<input type="submit" value="Bark Yourself" name="barkYourself"/>
 					</form>
 				</td>
-				<td>
-					<form name="changePassword" action="members"  method="POST">
+				<td style="text-align:center;">
+					<form name="changePassword" action="members"  method="get">
 						<input type="submit" value="Change Password" name="changePassword"/>
 					</form>
 				</td>
-				<td>
-					<form name="goToMembers" action="members"  method="POST">
+				<td style="text-align:center;">
+					<form name="goToMembers" action="members"  method="get">
 						<input type="submit" value="Return to Home" name="goToMembers"/>
 					</form>
 				</td>
-				<td>
+				<td style="text-align:right;">
 					<form name="logOff" action="members"  method="POST">
 						<input type="submit" value="log off" name="logOff"/>
 					</form>
@@ -74,12 +74,12 @@
 	
 				%>
 				<div id=oneBark>
-					<p><u><b> <%=ts.getUser()%> </b></u>
+					<p><u><b><%=ts.getUser()%></b></u>
 					 	<%=ts.getTweet()%></p>
 					<p> <%=ts.getDate()%>
 					
 					<!-- Show delete button next to bark -->
-					<form name="deleteBark" action="members"  method="POST">
+					<form name="deleteBark" action="members"  method="delete">
 					    <input type="hidden" name="deleteBark" value="<%=i%>" >
 					    <input type="hidden" name="Delete" value="Delete" >
 						<input type="submit" value="Delete Bark" name="deleteBark"  />

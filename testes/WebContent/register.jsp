@@ -22,7 +22,7 @@
 	</div>
 	
 	<div id=navigation>
-		<a href="/testes/login.jsp">Back</a>
+		<a href="login.jsp">Back</a>
 	</div>
 
  	<div id="mainContent">

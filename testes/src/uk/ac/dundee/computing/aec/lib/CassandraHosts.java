@@ -56,7 +56,7 @@ public  final class CassandraHosts
 		cluster = Cluster.builder()
 		         .addContactPoint(Host).build();
 		getHosts(cluster);
-		Keyspaces.SetUpKeySpaces(cluster);
+		Keyspaces.SetUpKeySpaces(cluster); //set up a keyspace, if it doesnt exist already
 		
 		return cluster;
 	}	

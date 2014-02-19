@@ -13,17 +13,13 @@ body {
 	background-repeat:no-repeat;
 }
 
-#push{
-	height: 20em;
-	clear: both;
-}
-
 #container{
 	width:100%;
 }
 
 input[type=text]:focus {
 	border-color:#333; 
+	font-family: "Comic Sans MS", sans-serif;
 }
 
 input[type=submit] {
@@ -33,29 +29,20 @@ input[type=submit] {
 	cursor:pointer;
 	-webkit-border-radius: 5px;
 	border-radius: 5px; 
-	/* vertical-align: middle; */
-	/* horizontal-align: middle; */
+	font-family: "Comic Sans MS", sans-serif;
 }
-
-/* #pictopleft{
-	position:absolute;
-	left:25px;
-	top:25px;
-	width:15%;
-	height:5px;
-} */
 
 #navigation{
 	filter: shadow(color=#000000,direction=135,strength=5);
 	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(color=#000000,direction=135,strength=5)";
 	top:5px;
-	font-family: "Arial", sans-serif;
+	font-family: "Comic Sans MS", sans-serif;
 	background:#FFFFFF;
-	margin-left:15%;
+	margin-left:5%;
 	margin-top:2%;
-	width:70%;
+	width:90%;
 	padding:5px;
-	border:3px solid #000000;
+	/* border:3px solid #000000; */
 	clear:both;
 }
   
@@ -63,63 +50,64 @@ input[type=submit] {
 	filter: shadow(color=#000000,direction=135,strength=5);
 	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(color=#000000,direction=135,strength=5)";
 	background:#FFFFFF;
-	font-family: "Arial", sans-serif;
+	font-family: "Comic Sans MS", sans-serif;
 	border:solid;
 	border-radius:25px;
-	margin-left:5%;
+	margin-left:2%;
 	width:90%;
 	margin-top:2%;
-	padding:5px;  
+	padding:10px;  
 }
 
 #oneUser{
 	filter: shadow(color=#000000,direction=135,strength=5);
 	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(color=#000000,direction=135,strength=5)";
 	background:#FFFFFF;
-	font-family: "Arial", sans-serif;
+	font-family: "Comic Sans MS", sans-serif;
 	border:solid;
 	border-radius:25px;
-	margin-left:5%;
+	margin-left:2%;
 	width:90%;
 	margin-top:2%;
-	padding:5px;  
+	padding:10px;  
 }
   
 #mainContent{
 	filter: shadow(color=#000000,direction=135,strength=5);
 	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(color=#000000,direction=135,strength=5)";
-/* 	background:#FFFFFF;
- */	font-family: "Arial", sans-serif;
-	border:solid;
-	margin-left:15%;
-	width:70%;
+	font-family: "Comic Sans MS", sans-serif;
+	margin-left:5%;
+	width:90%;
 	margin-top:2%;
 	padding:5px;
 }   
 
-#header{font-family: "Arial", sans-serif;
+#header{font-family: "Comic Sans MS", sans-serif;
 	filter: shadow(color=#000000,direction=135,strength=5);
 	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(color=#000000,direction=135,strength=5)";
 	text-shadow: 0.1em 0.1em #EEEEE0;
 	background-color:##FFFFFF;
-	margin-left: 15%;
+	margin-left: 5%;
 	font-size:18pt;	
 	font-weight:bold;
 	color:#CD0000;
-	width:70%;
+	width:90%;
 	padding:5px;
-	border:3px solid #000000;
+	text-align:center;
+	/* border:3px solid #000000; */
 }  
 
 #footer{
 	height: 4em;
 	clear: both;
-	font-family: "Arial", sans-serif;
+	font-family: "Comic Sans MS", sans-serif;
 	font-size:10pt;	
-	width:70%;
-	margin-left: 15%;
+	width:90%;
+	margin-left: 5%;
 	padding:6px;
 	text-align:center;
+	position:bottom;
+	attachment:fixed;
 }
 
 #H2{
@@ -128,39 +116,8 @@ input[type=submit] {
 
 #headerTable{
 	width:100%;
-	/* font-family: "MS Comic Sans", sans-serif; */
+	font-family: "Comic Sans MS", sans-serif;
 	background-color:#FFFFFF;
-}
-
-/*  table
-{
-	width:100%;
-	font-family: "Arial", sans-serif;
-	border:3px solid #5A7AF7;
-	background-image: -ms-linear-gradient(right, #FFFFFF 0%, #B7AFFF 100%);
-	background-image: -moz-linear-gradient(right, #FFFFFF 0%, #B7AFFF 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#B7AFFF', endColorstr='#ffffff');
-	background: -webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#B7AFFF));
-}    */
-  
-ul.a
-{
-	list-style-type:none;
-	margin:0;
-	padding:0;
-	overflow:hidden;
-}
-
-ul.b
-{
-	list-style-type:none;
-	margin:0;
-	padding:0;
-}
-
-li.c
-{
-	float:left;
 }
 
 a:link,a:visited

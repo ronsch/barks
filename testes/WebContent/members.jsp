@@ -32,18 +32,18 @@
 	<div id=navigation>
 		<table id="headerTable" >
 			<tr>
-				<td>
-					<form name="barkYourself" action="members"  method="POST">
+				<td style="text-align:left;">
+					<form name="barkYourself" action="members"  method="get">
 						<input type="submit" value="Bark Yourself" name="barkYourself"/>
 					</form>
 				</td>
-				<td>
-					<form name="changePassword" action="members"  method="POST">
+				<td style="text-align:center;">
+					<form name="changePassword" action="members"  method="get">
 						<input type="submit" value="Change Password" name="changePassword"/>
 					</form>
 				</td>
-				<td>
-					<form name="viewOwnBarks" action="members"  method="post">
+				<td style="text-align:center;">
+					<form name="viewOwnBarks" action="members"  method="get">
 						<input type="submit" value="View Own Barks" name="viewOwnBarks"/>
 					</form>
 				</td>
@@ -77,17 +77,29 @@
 	
 				%>
 				<div id=oneBark>
-				
-					<p><u><b><%=ts.getUser()%></b></u>
-					 	<%=ts.getTweet()%></p>
-					<p> <%=ts.getDate()%>
-					
-					<!-- Show unfollow button next to bark -->
-					<form name="unfollowUser" action="members"  method="POST" align="right">
-					    <input type="hidden" name="unfollowThisUser" value="<%=i%>" >
-					    <input type="hidden" name="unfollow" value="unfollow" >
-						<input type="submit" value="Unfollow User" name="unfollowUser"/>
-					</form>
+					<table width=100%>
+						<tr>
+							<td>
+								<u><b><%=ts.getUser()%></b></u>
+							</td>
+							<td>
+								<%=ts.getTweet()%>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<%=ts.getDate()%>
+							</td>
+							<td style="text-align:left;">
+								<!-- Show unfollow button next to bark -->
+								<form name="unfollowUser" action="members"  method="POST" align="right">
+								    <input type="hidden" name="unfollowThisUser" value="<%=i%>" >
+								    <input type="hidden" name="unfollow" value="unfollow" >
+									<input type="submit" value="Unfollow User" name="unfollowUser"/>
+								</form>	
+							</td>
+						</tr>
+					</table>
 				</div>
 				<% 
 				i++; //increase counter which is added to deletebutton name

@@ -34,7 +34,7 @@
 		<table id="headerTable" >
 			<tr>
 				<td style="text-align:left;">
-					<form name="goToMembers" action="members"  method="POST">
+					<form name="goToMembers" action="members"  method="get">
 						<input type="submit" value="Return to Home" name="goToMembers"/>
 					</form>
 				</td>

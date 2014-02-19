@@ -22,7 +22,7 @@
 	</div>
 	
 	<div id=navigation>
-		<a href="/testes/register.jsp">Create new Account</a>
+		<a href="register.jsp">Create new Account</a>
 	</div>
 	
 	<div id="mainContent">

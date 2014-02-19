@@ -3,8 +3,6 @@ package uk.ac.dundee.computing.aec.servlets;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -12,12 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import com.datastax.driver.core.BoundStatement;
 import com.datastax.driver.core.Cluster;
-import com.datastax.driver.core.PreparedStatement;
-import com.datastax.driver.core.ResultSet;
-import com.datastax.driver.core.Row;
-import com.datastax.driver.core.Session;
 import uk.ac.dundee.computing.aec.lib.*;
 import uk.ac.dundee.computing.aec.models.*;
 import uk.ac.dundee.computing.aec.stores.TweetStore;
@@ -30,7 +23,6 @@ import uk.ac.dundee.computing.aec.stores.usersStore;
 @WebServlet({ "/members" })
 public class members extends HttpServlet 
 {
-	
 	LinkedList<usersStore> userList = new LinkedList<usersStore>();
 	LinkedList<TweetStore> barks = new LinkedList<TweetStore>();
 	LinkedList<TweetStore> ownBarks = new LinkedList<TweetStore>(); //if user sees own barks
@@ -99,21 +91,7 @@ public class members extends HttpServlet
 		request.setAttribute("memberList", userList); //Set a bean with the list in it
 		request.setAttribute("emailAddress", currentUserEmailAddress); //Set a bean with the email address in it		
 		
-    	RequestDispatcher rd = request.getRequestDispatcher("/members.jsp"); 
-		rd.forward(request, response);
-	}
-    
-    /*
-     * This page shows the last barks, will be obsolete soon as its not really feasible or useful
-     */
-    private void openTweetPage(HttpServletRequest request,	HttpServletResponse response) throws ServletException, IOException 
-    {
-		memberModel mM = new memberModel();
-		mM.setCluster(cluster);
-		barks = new LinkedList<TweetStore>();//empty tweetlist
-		barks = mM.getBarks();
-		request.setAttribute("barksList", barks); //Set a bean with the list in it
-		RequestDispatcher rd = request.getRequestDispatcher("/RenderTweets.jsp"); 
+    	RequestDispatcher rd = request.getRequestDispatcher("members.jsp"); 
 		rd.forward(request, response);
 	}
     
@@ -121,7 +99,7 @@ public class members extends HttpServlet
      * Open new login screen / dont pass anything, is going to be empty anyways
      */
     private void openLoginScreen(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-    	RequestDispatcher rd = request.getRequestDispatcher("/login.jsp"); 
+    	RequestDispatcher rd = request.getRequestDispatcher("login.jsp"); 
     	logout(); //just in case this hasnt happened already
     	//reset these beans with the new empty data
     	request.setAttribute("emailAddress", currentUserEmailAddress); 
@@ -145,7 +123,7 @@ public class members extends HttpServlet
      */
     private void openRegisterScreen(HttpServletRequest request,	HttpServletResponse response) throws ServletException, IOException
     {
-    	RequestDispatcher rd = request.getRequestDispatcher("/register.jsp"); 
+    	RequestDispatcher rd = request.getRequestDispatcher("register.jsp"); 
     	logout();//just in case
     	request.setAttribute("emailAddress", currentUserEmailAddress); 
     	request.setAttribute("username", currentUserName);
@@ -157,7 +135,7 @@ public class members extends HttpServlet
      */
     private void openChangePasswordScreen(HttpServletRequest request, HttpServletResponse response, String warningMessage2) throws ServletException, IOException 
     {
-    	RequestDispatcher rd = request.getRequestDispatcher("/changePassword.jsp"); 
+    	RequestDispatcher rd = request.getRequestDispatcher("changePassword.jsp"); 
     	request.setAttribute("warningMessage", warningMessage2); //set warning message
     	request.setAttribute("username", currentUserName); //Set a bean with the username in it
     	rd.forward(request, response);
@@ -168,7 +146,7 @@ public class members extends HttpServlet
      */
     private void openBarkYourself(HttpServletRequest request, HttpServletResponse response)  throws ServletException, IOException
     {
-    	RequestDispatcher rd = request.getRequestDispatcher("/newTweet.jsp");
+    	RequestDispatcher rd = request.getRequestDispatcher("newTweet.jsp");
     	request.setAttribute("username", currentUserName); //Set a bean with the username in it
 		rd.forward(request, response);
 	}
@@ -186,7 +164,7 @@ public class members extends HttpServlet
 		ownBarks = new LinkedList<TweetStore>(); //empty list to avoid duplications
 		ownBarks = mM.getOwnBarks(currentUserName);
 		
-    	RequestDispatcher rd = request.getRequestDispatcher("/ownBarks.jsp");
+    	RequestDispatcher rd = request.getRequestDispatcher("ownBarks.jsp");
     	request.setAttribute("username", currentUserName); //Set a bean with the username in it
     	request.setAttribute("ownBarks", ownBarks); //Set a bean with the username in it
 
@@ -195,8 +173,43 @@ public class members extends HttpServlet
     
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * 
+	 *if its just a redirection, and the change should/can be shown in the URL, then use get
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	{
+		if(request.getParameter("viewOwnBarks") != null)
+		{//user wants to see own barks
+			openOwnBarkScreen(request, response);
+		}else if(request.getParameter("barkYourself") != null)
+		{//user wants to bark
+    		openBarkYourself(request, response);
+		}else if(request.getParameter("changePassword") != null)
+		{//open changePassword window
+			openChangePasswordScreen(request, response, "   ");
+		}else if(request.getParameter("goToMembers") != null)										//get
+		{//directly open members page
+    		openMemberHome(request, response, currentUserName);
+		}
+	}
+	
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * 
+	 * if something should be deleted, use delete
+	 */
+	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	{
+		/*memberModel mM = new memberModel();
+		mM.setCluster(cluster);
+		*/
+		
+	}
+	
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
 		
 	}
@@ -213,7 +226,7 @@ public class members extends HttpServlet
 		request.setAttribute("userloggedIn", userloggedIn); //set bean whether user is logged in or not
 
 		if(request.getParameter("logMeIn") != null) 
-		{//if the request is to verify login // login a user
+		{// login a user
 			String isLogin = mM.login(request.getParameter("emailAddress"), request.getParameter("password"));
 			if(isLogin != null)
 			{
@@ -252,7 +265,7 @@ public class members extends HttpServlet
 			}
 		}
 		else if(request.getParameter("insertNewBark") != null && request.getParameter("name") != null && request.getParameter("bark") != null)
-		{
+		{ //post a new bark
 			System.out.println("Add tweet");
 			mM.addBark(request.getParameter("name"), request.getParameter("bark"));
 			
@@ -267,25 +280,6 @@ public class members extends HttpServlet
 		{
     		openMemberHome(request, response, currentUserName);
 		}
-		else if(request.getParameter("deleteUser") != null) //if delete user was requested
-		{
-			//deleteUser
-			System.out.println("Delete user: " + request.getParameter("deleteUser"));
-			
-			String userToBeDeleted = request.getParameter("deleteUser");
-			int foo = Integer.parseInt(userToBeDeleted); //find which bark to delete
-			mM.deleteUser(userList.get(foo).getEmail(), userList.get(foo).getUsername()); //delete user in list at foo
-			openMemberHome(request, response, currentUserName);
-		}
-		else if(request.getParameter("unfollowUser") != null) //if a user needs to be unfollowed
-		{//unfollowUser
-			String userToBeUnfollowed = request.getParameter("unfollowThisUser");
-			System.out.println("Your name: " + currentUserName);
-			System.out.println("unfollow this user: " + userToBeUnfollowed);
-			int foo = Integer.parseInt(userToBeUnfollowed); //find which bark to delete
-			mM.unfollowUser(currentUserName, barks.get(foo).getUser()); //delete user
-    		openMemberHome(request, response, currentUserName);
-		}
 		else if(request.getParameter("followUser") != null) 
 		{//if a user wants to follow another user
 			if(userList != null)
@@ -298,32 +292,11 @@ public class members extends HttpServlet
 	    		openMemberHome(request, response, currentUserName);
 			}
 		}
-		else if(request.getParameter("barkYourself") != null)
-		{//user wants to bark
-    		openBarkYourself(request, response);
-		}
-		else if(request.getParameter("goToMembers") != null)
-		{//directly open members page
-    		openMemberHome(request, response, currentUserName);
-		}
-		else if(request.getParameter("logOff") != null)
+		else if(request.getParameter("logOff") != null)												//post
 		{//log user off
 			openLoginScreen(request, response);
 		}//"viewOwnBarks"
-		else if(request.getParameter("viewOwnBarks") != null)
-		{//user wants to see own barks
-			openOwnBarkScreen(request, response);
-		}else if(request.getParameter("deleteBark") != null) //if the request is to delete a own bark
-		{
-			System.out.println("Delete Bark");
-			String barkToBeDeleted = request.getParameter("deleteBark");
-			int foo = Integer.parseInt(barkToBeDeleted); //find which bark to delete
-			mM.deleteBark(ownBarks.get(foo).getUUID().toString(), ownBarks.get(foo).getUser().toString()); //delete bark
-			openOwnBarkScreen(request, response);
-		}else if(request.getParameter("changePassword") != null)
-		{//open changePassword window
-			openChangePasswordScreen(request, response, "   ");
-		}else if(request.getParameter("changeUserPassword") != null)
+		else if(request.getParameter("changeUserPassword") != null)
 		{//change the password
 			boolean success = false;
 			String warningMessage = "";
@@ -344,8 +317,36 @@ public class members extends HttpServlet
 					warningMessage = "Was the old password correct?";
 				}
 			}
-			//finally open change-password screen so user can see the success or failure message
-			openChangePasswordScreen(request, response, warningMessage);
-		}//changePassword
+		}
+		else if(request.getParameter("deleteUser") != null) //if delete user was requested
+		{
+			//deleteUser
+			System.out.println("Delete user: " + request.getParameter("deleteUser"));
+			
+			String userToBeDeleted = request.getParameter("deleteUser");
+			int foo = Integer.parseInt(userToBeDeleted); //find which bark to delete
+			mM.deleteUser(userList.get(foo).getEmail(), userList.get(foo).getUsername()); //delete user in list at foo
+			openMemberHome(request, response, currentUserName);
+		}
+		else if(request.getParameter("unfollowUser") != null) //if a user needs to be unfollowed
+		{//unfollowUser - delete follower entry
+			String userToBeUnfollowed = request.getParameter("unfollowThisUser");
+			System.out.println("Your name: " + currentUserName);
+			System.out.println("unfollow this user: " + userToBeUnfollowed);
+			int foo = Integer.parseInt(userToBeUnfollowed); //find which bark to delete
+			mM.unfollowUser(currentUserName, barks.get(foo).getUser()); //delete user
+    		openMemberHome(request, response, currentUserName);
+		}
+		else if(request.getParameter("deleteBark") != null) //if the request is to delete a own bark
+		{
+			System.out.println("Delete Bark");
+			String barkToBeDeleted = request.getParameter("deleteBark");
+			int foo = Integer.parseInt(barkToBeDeleted); //find which bark to delete
+			mM.deleteBark(ownBarks.get(foo).getUUID().toString(), ownBarks.get(foo).getUser().toString()); //delete bark
+			openOwnBarkScreen(request, response);
+		}
+		else{ //if nothing was selected or there was some problem - go to login screen
+			openLoginScreen(request, response);
+		}
 	}
 }

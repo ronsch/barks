@@ -150,7 +150,7 @@ public class memberModel
 	 */
 	private Session createSession() 
 	{
-		Session session = cluster.connect("keyspace2");
+		Session session = cluster.connect("barks");
 		return session;
 	}
 	

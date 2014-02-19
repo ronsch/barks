@@ -27,31 +27,39 @@
 <body background="BG2.jpg">
 
 	<div id="header">
-		<h1>Change Password</h1>
+		<h1>Bark!</h1>
 	</div>
 	
 	<div id=navigation>
-		<form name="goToMembers" action="members"  method="POST">
-			<input type="submit" value="Back to members page" name="goToMembers"/>
-		</form>
-		
-		<form name="logOff" action="members"  method="POST">
-			<input type="submit" value="log off" name="logOff"/>
-		</form>
+		<table id="headerTable" >
+			<tr>
+				<td style="text-align:left;">
+					<form name="goToMembers" action="members"  method="get">
+						<input type="submit" value="Back to members page" name="goToMembers"/>
+					</form>
+				</td>
+				<td style="text-align:right;">
+					<form name="logOff" action="members"  method="POST">
+						<input type="submit" value="log off" name="logOff"/>
+					</form>
+				</td>
+			</tr>
+		</table>
 	</div>
 
 	<div id="mainContent">
-		<h1>Write new Bark</h1>
+		<h1>!! Bark:</h1>
 		<%
 		String username = (String)request.getAttribute("username");
 		if(username != null)//check if null
 		{
 			%> 
 			<form action="members" method="post">
-			  	Your name: <p><%=username%></p><br>
-			  	<input type="hidden" name="name" value="<%=username%>" >
 			  	
-			  	Bark: <input type="text" name="bark"><br>
+			  	<input type="hidden" name="name" value="<%=username%>" >
+			  	<input type="text" name="bark">
+			  	<br>
+			  	<br>
 			  	<input type="submit" value="Bark Bark!" name="insertNewBark">
 			</form>
 			<%
