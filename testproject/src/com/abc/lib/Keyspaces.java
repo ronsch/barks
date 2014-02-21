@@ -1,4 +1,4 @@
-package uk.ac.dundee.computing.aec.lib;
+package com.abc.lib;
 
 import com.datastax.driver.core.*;
 

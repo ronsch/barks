@@ -1,4 +1,4 @@
-package uk.ac.dundee.computing.aec.models;
+package com.abc.models;
 
 /*
  * Expects a cassandra columnfamily defined as
@@ -15,28 +15,14 @@ package uk.ac.dundee.computing.aec.models;
 
 import java.util.Collections;
 import java.util.LinkedList;
-
 import com.datastax.driver.core.BoundStatement;
 import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.PreparedStatement;
 import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.Row;
 import com.datastax.driver.core.Session;
-
-
-
-
-
-
-
-
-
-
-
-
-import uk.ac.dundee.computing.aec.stores.TweetStore;
-//import uk.ac.dundee.computing.aec.stores.TweetStore;
-import uk.ac.dundee.computing.aec.stores.usersStore;
+import com.abc.stores.TweetStore;
+import com.abc.stores.usersStore;
 
 public class memberModel 
 {
@@ -61,8 +47,8 @@ public class memberModel
 		String currentUser = user;
 		//create statement
 		String prepared = "SELECT * from users";
-		
-		if(searchterm.equals("|"))//if searchterm is empty - | was entered as a default
+		System.out.println("searchterm: " + searchterm);
+		if(searchterm.equals("") || searchterm == null)//if searchterm is empty - "" was entered as a default
 		{			//conduct empty search
 			prepared += " LIMIT 100";
 		}
@@ -73,7 +59,6 @@ public class memberModel
 		PreparedStatement statement = session.prepare(prepared); //get all users that resemble search term
 
 		LinkedList<String> followedUsers = getFollowers(currentUser);//get followed users of this user
-		
 		
 		BoundStatement boundStatement = new BoundStatement(statement);
 		ResultSet rs = session.execute(boundStatement); //execute command
@@ -111,7 +96,6 @@ public class memberModel
 		session.close();
 		
 		Collections.sort(userList); //sort linked list alphabetically by username
-		//, Collections.reverseOrder()
 		return userList;
 	}
 	
@@ -122,7 +106,6 @@ public class memberModel
 	{
 		LinkedList<String> userList = new LinkedList<String>(); //future list of users the origuser follows
 		Session session = createSession();
-		String user = origuser;
 		
 		PreparedStatement statement = session.prepare("SELECT * from followers WHERE user='" + origuser + "' ALLOW FILTERING"); //get all users that resemble search term
 
@@ -252,6 +235,7 @@ public class memberModel
 			}
 		}
 		
+		System.out.println("reached this in change password");
 		//if the old password matches
 		if(correctOldPassword)
 		{
@@ -270,7 +254,7 @@ public class memberModel
 				success = false; //there was a problem, set to false
 			}
 		}
-		
+		System.out.println("reached this in change password2");
 		session.close();
 		return success;
 	}
@@ -290,7 +274,7 @@ public class memberModel
 
 		//first: delete the user
 		try{
-			System.out.println("deleting user");
+			System.out.println("trying to delete");
 			PreparedStatement statement = session.prepare("DELETE FROM users WHERE email = '" + email + "'"); //create delete query
 			BoundStatement boundStatement = new BoundStatement(statement);
 			session.execute(boundStatement); //execute command
@@ -424,7 +408,11 @@ public class memberModel
 	public void deleteBark(String uuID, String user)
 	{
 		Session session = createSession();
-		PreparedStatement statement = session.prepare("DELETE FROM barks WHERE interaction_time = " + uuID + " AND user= '" + user + "'"); //create delete query (must include both keys)
+		System.out.println("uuid: " + uuID);
+		System.out.println("username: " + user);
+
+		PreparedStatement statement = session.prepare("DELETE FROM barks.barks WHERE interaction_time = " + uuID + " AND user= '" + user + "'"); //create delete query (must include both keys)
+		
 		BoundStatement boundStatement = new BoundStatement(statement);
 		session.execute(boundStatement); //execute command
 		session.close();
@@ -437,7 +425,9 @@ public class memberModel
 	{
 		Session session = createSession();
 		long currentDate = System.currentTimeMillis();
-		
+		System.out.println("name: " + name);
+		System.out.println("bark: " + bark);
+
 		//whenever there is a ' in the string, it has to be replaced with ''
 		bark = bark.replaceAll("'", "''");
 		String st = "INSERT INTO barks (user, interaction_time, thetimestamp, bark) VALUES ('" + name + "', now(), " + currentDate + ", '" + bark + "')";
@@ -501,6 +491,7 @@ public class memberModel
 		{
 			for (Row row : rs) //for each row in bark table
 			{
+				//System.out.println("bark found, adding to list");
 				TweetStore ts = new TweetStore();
 				ts.setTweet(row.getString("bark"));	//populate tweet object
 				ts.setUser(row.getString("user"));
@@ -541,12 +532,9 @@ public class memberModel
 				ts.setUUID(row.getUUID("interaction_time"));
 				ownBarks.add(ts);//add bark to bark list
 			}
-			
 		}
 		session.close();
 		
 		return ownBarks;
 	}
-
-	
 }

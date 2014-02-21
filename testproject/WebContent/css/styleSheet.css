@@ -1,0 +1,142 @@
+* {
+margin: 0;
+}
+
+html, body {
+height: 100%;
+}
+
+body {
+	background-image:url('background.jpg');
+	background-position:right bottom;
+	background-attachment:fixed;
+	background-repeat:no-repeat;
+}
+
+#container{
+	width:100%;
+}
+
+input[type=text]:focus {
+	border-color:#333; 
+	font-family: "Comic Sans MS", sans-serif;
+}
+
+input[type=submit] {
+	padding:5px 15px; 
+	background:#ccc; 
+	border:0 none;
+	cursor:pointer;
+	-webkit-border-radius: 5px;
+	border-radius: 5px; 
+	font-family: "Comic Sans MS", sans-serif;
+}
+
+#navigation{
+	filter: shadow(color=#000000,direction=135,strength=5);
+	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(color=#000000,direction=135,strength=5)";
+	top:5px;
+	font-family: "Comic Sans MS", sans-serif;
+	background:#FFFFFF;
+	margin-left:5%;
+	margin-top:2%;
+	width:90%;
+	padding:5px;
+	/* border:3px solid #000000; */
+	clear:both;
+}
+  
+#oneBark{
+	filter: shadow(color=#000000,direction=135,strength=5);
+	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(color=#000000,direction=135,strength=5)";
+	background:#FFFFFF;
+	font-family: "Comic Sans MS", sans-serif;
+	border:solid;
+	border-radius:25px;
+	margin-left:2%;
+	width:90%;
+	margin-top:2%;
+	padding:10px;  
+}
+
+#oneUser{
+	filter: shadow(color=#000000,direction=135,strength=5);
+	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(color=#000000,direction=135,strength=5)";
+	background:#FFFFFF;
+	font-family: "Comic Sans MS", sans-serif;
+	border:solid;
+	border-radius:25px;
+	margin-left:2%;
+	width:90%;
+	margin-top:2%;
+	padding:10px;  
+}
+  
+#mainContent{
+	filter: shadow(color=#000000,direction=135,strength=5);
+	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(color=#000000,direction=135,strength=5)";
+	font-family: "Comic Sans MS", sans-serif;
+	margin-left:5%;
+	width:90%;
+	margin-top:2%;
+	padding:5px;
+}   
+
+#header{font-family: "Comic Sans MS", sans-serif;
+	filter: shadow(color=#000000,direction=135,strength=5);
+	-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(color=#000000,direction=135,strength=5)";
+	text-shadow: 0.1em 0.1em #EEEEE0;
+	background-color:##FFFFFF;
+	margin-left: 5%;
+	font-size:18pt;	
+	font-weight:bold;
+	color:#CD0000;
+	width:90%;
+	padding:5px;
+	text-align:center;
+	/* border:3px solid #000000; */
+}  
+
+#footer{
+	height: 4em;
+	clear: both;
+	font-family: "Comic Sans MS", sans-serif;
+	font-size:10pt;	
+	width:90%;
+	margin-left: 5%;
+	margin-bottom: 1em;
+	padding:6px;
+	text-align:center;
+	position:bottom;
+	attachment:fixed;
+}
+
+#H2{
+	font-family: "Arial", sans-serif;
+}
+
+#headerTable{
+	width:100%;
+	font-family: "Comic Sans MS", sans-serif;
+	background-color:#FFFFFF;
+}
+
+a:link,a:visited
+{
+	display:block;
+	border:solid;
+	width:119px;
+	font-weight:bold;
+	color:#CD0000;
+	background-color:#FFFFFF;
+	text-align:center;
+	padding:4px;
+	text-decoration:none;
+	text-transform:uppercase;
+}
+
+a:hover,a:active
+{
+	background-color:#FFFFFF;
+	color:#000000
+}

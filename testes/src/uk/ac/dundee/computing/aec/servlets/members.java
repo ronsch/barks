@@ -20,7 +20,7 @@ import uk.ac.dundee.computing.aec.stores.usersStore;
  * Servlet implementation class login
  * handles all IO for login screen
  */
-@WebServlet({ "/members" })
+@WebServlet(urlPatterns={ "members", "/members", "/members/*" })
 public class members extends HttpServlet 
 {
 	LinkedList<usersStore> userList = new LinkedList<usersStore>();
@@ -38,7 +38,6 @@ public class members extends HttpServlet
     public members() 
     {
         super();
-        // TODO Auto-generated constructor stub
     }
     
     public void init(ServletConfig config) throws ServletException 
