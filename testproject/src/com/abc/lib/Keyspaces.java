@@ -8,6 +8,7 @@ public final class Keyspaces {
 	
 	public static void SetUpKeySpaces(Cluster c)
 	{
+		String dropkeySpace="drop keyspace barks";
 		String createkeyspace="create keyspace if not exists barks  WITH replication = {'class':'SimpleStrategy', 'replication_factor':1}";
 		String createBarks="create table IF NOT EXISTS barks.barks (user varchar, interaction_time timeuuid, bark varchar, thetimestamp timestamp, PRIMARY KEY (user, interaction_time)) with clustering order by (interaction_time DESC)";
 		String createFollowers = "create table IF NOT EXISTS barks.followers (user varchar, id timeuuid, otheruser varchar, PRIMARY KEY (user, id)) with clustering order by (id DESC)";
@@ -19,6 +20,13 @@ public final class Keyspaces {
 			 com.datastax.driver.core.SimpleStatement cqlQuery = new  com.datastax.driver.core.SimpleStatement(createkeyspace);
 			session.execute(cqlQuery);
 			//session.execute("DESCRIBE KEYSPACES;");
+			
+			/*cqlQuery = new SimpleStatement(dropkeySpace);
+			session.execute(cqlQuery);
+			
+			cqlQuery = new SimpleStatement(createkeyspace);
+			session.execute(cqlQuery);
+			*/
 			
 			cqlQuery = new SimpleStatement(createBarks);
 			session.execute(cqlQuery);

@@ -143,6 +143,15 @@ public class memberModel
 	public boolean newUser(String email, String username, String password){
 		boolean success = false;
 		Session session = createSession();
+		email=email.replaceAll("'", "''");
+		username=username.replaceAll("'", "''");
+		password=password.replaceAll("'", "''");
+		email=email.replaceAll("<", "");
+		username=username.replaceAll("<", "");
+		password=password.replaceAll("<", "");
+		email=email.replaceAll(">", "");
+		username=username.replaceAll(">", "");
+		password=password.replaceAll(">", "");
 		//first find out whether the username or email exists already, 
 		//while the combination must be unique, they could exist as long as one of the two is different
 		PreparedStatement statement = session.prepare("SELECT * FROM users WHERE username = '" + username + "' ALLOW FILTERING"); //create select query
@@ -183,6 +192,12 @@ public class memberModel
 	public String login(String email, String password) 
 	{
 		String username = null;
+		email = email.replaceAll("'", "''");
+		password = password.replaceAll("'", "''");
+		email=email.replaceAll("<", "");
+		password=password.replaceAll("<", "");
+		email=email.replaceAll(">", "");
+		password=password.replaceAll(">", "");
 		
 		Session session = createSession();
 		PreparedStatement statement = session.prepare("SELECT * FROM users WHERE email = '" + email + "'"); //create add query
@@ -215,6 +230,8 @@ public class memberModel
 	{
 		boolean success = false;
 		boolean correctOldPassword = false;
+		email = email.replaceAll("'", "''");
+		newPassword = newPassword.replaceAll("'", "''");
 		//find out if old password matches with entered password
 		Session session = createSession();
 		PreparedStatement statement = session.prepare("SELECT * FROM users WHERE email = '" + email + "'"); //create add query
@@ -430,6 +447,8 @@ public class memberModel
 
 		//whenever there is a ' in the string, it has to be replaced with ''
 		bark = bark.replaceAll("'", "''");
+		bark = bark.replaceAll("<", "");
+		bark = bark.replaceAll(">", "");
 		String st = "INSERT INTO barks (user, interaction_time, thetimestamp, bark) VALUES ('" + name + "', now(), " + currentDate + ", '" + bark + "')";
 		PreparedStatement statement = session.prepare(st); //create add query
 		BoundStatement boundStatement = new BoundStatement(statement);

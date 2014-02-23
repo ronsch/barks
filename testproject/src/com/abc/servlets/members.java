@@ -180,10 +180,10 @@ public class members extends HttpServlet
 				openLoginScreen(request, response);//back to login screen
 			}
 		}
-		else if (request.getParameter("NewEmailAddress") != null &&
-				 request.getParameter("NewPassword") != null &&
+		else if (request.getParameter("NewEmailAddress")!= null &&
+				 request.getParameter("NewPassword") 	!= null &&
 				 request.getParameter("RepeatPassword") != null &&
-				 request.getParameter("userName") != null)
+				 request.getParameter("userName") 		!= null)
 		{//if a new user is to be created
 			String email = 			request.getParameter("NewEmailAddress");
 			String password = 		request.getParameter("NewPassword");
@@ -230,7 +230,10 @@ public class members extends HttpServlet
 		{ //post a new bark
 			
 			System.out.println("Add bark");
-			mM.addBark(request.getParameter("name"), request.getParameter("bark"));
+			HttpSession Session = request.getSession();
+			LoginBean thisUser = (LoginBean) Session.getAttribute("currentUser");
+			
+			mM.addBark(thisUser.getUsername(), request.getParameter("bark"));
 			
 			openOwnBarkScreen(request, response);
 		}
